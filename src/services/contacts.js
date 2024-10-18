@@ -26,11 +26,11 @@ export const updateContact = async (contactID, payload, options = {}) => {
     },
   );
 
-  if (!rawResult || !rawResult.value) return null;
+  const contact = rawResult.value;
 
-  return {
-    student: rawResult.value,
-  };
+  if (!rawResult || !contact) return null;
+
+  return contact;
 };
 
 export const deleteContact = async (contactID) => {
