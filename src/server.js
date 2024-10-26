@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import pino from 'pino-http';
 import cors from 'cors';
 
@@ -19,6 +20,7 @@ export const setupServer = () => {
     }),
   );
 
+  app.use(cookieParser());
   app.use(cors());
 
   // app.use(
