@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import { ContactsCollection } from '../db/models/contacts.js';
 
 export const getAllContacts = async ({
@@ -6,6 +7,7 @@ export const getAllContacts = async ({
   sortBy,
   sortOrder,
   filter,
+  userId,
 }) => {
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
@@ -18,6 +20,8 @@ export const getAllContacts = async ({
   if (filter.isFavourite) {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
+
+  contactsQuery.where('userId').equals(userId);
 
   const [totalItems, contacts] = await Promise.all([
     ContactsCollection.countDocuments(contactsQuery),
@@ -40,19 +44,29 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (contactId) => {
+export const getContactById = async (contactId, userId) => {
   const contact = await ContactsCollection.findById(contactId);
+
+  if (contact.userId.toString() !== userId.toString()) {
+    throw createHttpError(404, 'Contact not found');
+  }
+
   return contact;
 };
 
-export const createContact = async (payload) => {
-  const contact = await ContactsCollection.create(payload);
+export const createContact = async (payload, userId) => {
+  const contact = await ContactsCollection.create({ ...payload, userId });
   return contact;
 };
 
-export const updateContact = async (contactID, payload, options = {}) => {
+export const updateContact = async (
+  contactID,
+  payload,
+  userId,
+  options = {},
+) => {
   const rawResult = await ContactsCollection.findOneAndUpdate(
-    { _id: contactID },
+    { _id: contactID, userId },
     payload,
     {
       new: true,
@@ -68,9 +82,10 @@ export const updateContact = async (contactID, payload, options = {}) => {
   return contact;
 };
 
-export const deleteContact = async (contactID) => {
+export const deleteContact = async (contactID, userId) => {
   const contact = await ContactsCollection.findOneAndDelete({
     _id: contactID,
+    userId,
   });
   return contact;
 };

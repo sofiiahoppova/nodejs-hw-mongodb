@@ -19,7 +19,7 @@ export const registerUser = async (payload) => {
   });
 };
 
-const createSession = async () => {
+const createSession = () => {
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
 
