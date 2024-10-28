@@ -45,12 +45,7 @@ export const getAllContacts = async ({
 };
 
 export const getContactById = async (contactId, userId) => {
-  const contact = await ContactsCollection.findById(contactId);
-
-  if (contact.userId.toString() !== userId.toString()) {
-    throw createHttpError(404, 'Contact not found');
-  }
-
+  const contact = await ContactsCollection.findOne({ _id: contactId, userId });
   return contact;
 };
 
