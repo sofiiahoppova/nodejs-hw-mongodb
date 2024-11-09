@@ -1,4 +1,3 @@
-import createHttpError from 'http-errors';
 import { ContactsCollection } from '../db/models/contacts.js';
 
 export const getAllContacts = async ({
