@@ -99,7 +99,7 @@ export const updateContactContoller = async (req, res) => {
     throw createHttpError(404, 'Contact not found');
   }
 
-  res.json({
+  res.status(200).json({
     status: 200,
     message: 'Successfully patched a contact!',
     data: contact,
@@ -114,5 +114,9 @@ export const deleteContactController = async (req, res) => {
     throw createHttpError(404, 'Contact not found');
   }
 
-  res.status(204).send('Contact deleted sucsessfully!');
+  res.status(204).json({
+    status: 200,
+    message: 'Contact deleted sucsessfully!',
+    data: {},
+  });
 };
