@@ -4,10 +4,8 @@ required:
   - name
   - email
   - phoneNumber
-  - isFavourite
   - contactType
   - userId
-  - photo
 properties:
   _id:
     description: "Contact's id"
