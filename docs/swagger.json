@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "https://contacts-app-azu3.onrender.com"
     }
   ],
   "tags": [
@@ -230,6 +230,7 @@
                   "photo": {
                     "description": "Contact's avatar",
                     "type": "string",
+                    "format": "binary",
                     "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
                   }
                 }
@@ -432,6 +433,7 @@
                   "photo": {
                     "description": "Contact's avatar",
                     "type": "string",
+                    "format": "binary",
                     "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
                   }
                 }
@@ -623,10 +625,8 @@
           "name",
           "email",
           "phoneNumber",
-          "isFavourite",
           "contactType",
-          "userId",
-          "photo"
+          "userId"
         ],
         "properties": {
           "_id": {
